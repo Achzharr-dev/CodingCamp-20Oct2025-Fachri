@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>My To Do List</h1>
+
+        <form id="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a new task">
+            <input type="date" id="todo-date">
+            <button type="submit">add task</button>
+        </form>
+        
+        <div class="filter">
+            <input type="text" id="filter-input" placeholder="cari task...">
+            <label for="status-filter">Status</label>
+            <select id="status-filter">
+                <option value="all">All</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+            </select>
+        </div>
+
+            <table id="todo-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Task</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Tasks will be added here dynamically -->
+                </tbody>
+            </table>
+
+    </div>
+    <script src="/js/script.js"></script>
+</body>
+</html>
