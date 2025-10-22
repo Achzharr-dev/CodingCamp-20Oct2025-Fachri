@@ -14,7 +14,7 @@ filterInput.addEventListener("keyup", applyFilters);
 statusFilter.addEventListener("change", applyFilters);
 
 function addTodo(e) {
-  e.preventDefault();
+  e.preventDefault("form berhasil di kirim!");
   const task = todoInput.value.trim();
   const date = todoDate.value;
 
