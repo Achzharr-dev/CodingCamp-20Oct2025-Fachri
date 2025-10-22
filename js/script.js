@@ -3,18 +3,19 @@ const todoInput = document.getElementById("todo-input");
 const todoDate = document.getElementById("todo-date");
 const todoTable = document.querySelector("#todo-table tbody");
 const filterInput = document.getElementById("filter-input");
-const statusFilter = document.getElementById("status-filter");
+const filterButton = document.getElementById("filter-button");
+const filterMenu = document.getElementById("filter-menu");
 
 let todos = JSON.parse(localStorage.getItem("todos")) || [];
+let currentFilter = "all";
 
-document.addEventListener("DOMContentLoaded", loadTodos);
-form.addEventListener("submit", addTodo);
-todoTable.addEventListener("click", handleTableClick);
-filterInput.addEventListener("keyup", applyFilters);
-statusFilter.addEventListener("change", applyFilters);
+document.addEventListener("DOMContentLoaded", () => {
+  renderTable(todos);
+});
 
-function addTodo(e) {
-  e.preventDefault("form berhasil di kirim!");
+// ===== Add Todo =====
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
   const task = todoInput.value.trim();
   const date = todoDate.value;
 
@@ -23,18 +24,66 @@ function addTodo(e) {
     return;
   }
 
-  const todo = { task, date, completed: false };
+  const todo = { id: Date.now(), task, date, completed: false };
   todos.push(todo);
   saveTodos();
-  renderTable();
+  renderTable(todos);
 
   todoInput.value = "";
   todoDate.value = "";
-}
+});
 
-function renderTable(filtered = todos) {
+// ===== Event Delegation =====
+todoTable.addEventListener("click", (e) => {
+  const deleteBtn = e.target.closest(".delete-btn");
+  const checkbox = e.target.closest(".complete-checkbox");
+
+  if (deleteBtn) {
+    const id = Number(deleteBtn.dataset.id);
+    todos = todos.filter((todo) => todo.id !== id);
+    saveTodos();
+    renderTable(getFilteredTodos());
+  }
+
+  if (checkbox) {
+    const id = Number(checkbox.dataset.id);
+    todos = todos.map((todo) =>
+      todo.id === id ? { ...todo, completed: checkbox.checked } : todo
+    );
+    saveTodos();
+    renderTable(getFilteredTodos());
+  }
+});
+
+// ===== Filter Search =====
+filterInput.addEventListener("keyup", () => {
+  renderTable(getFilteredTodos());
+});
+
+// ===== Dropdown Filter =====
+filterButton.addEventListener("click", () => {
+  filterMenu.classList.toggle("hidden");
+});
+
+document.addEventListener("click", (e) => {
+  if (!filterButton.contains(e.target) && !filterMenu.contains(e.target)) {
+    filterMenu.classList.add("hidden");
+  }
+});
+
+filterMenu.querySelectorAll("li").forEach((item) => {
+  item.addEventListener("click", () => {
+    currentFilter = item.getAttribute("data-status");
+    filterButton.textContent = `Filter: ${item.textContent} ▼`;
+    filterMenu.classList.add("hidden");
+    renderTable(getFilteredTodos());
+  });
+});
+
+// ===== Render Table =====
+function renderTable(data) {
   todoTable.innerHTML = "";
-  filtered.forEach((todo, index) => {
+  data.forEach((todo, index) => {
     const row = document.createElement("tr");
     if (todo.completed) row.classList.add("completed");
 
@@ -43,54 +92,28 @@ function renderTable(filtered = todos) {
       <td>${todo.task}</td>
       <td>${todo.date}</td>
       <td>
-        <input type="checkbox" class="complete-checkbox" data-index="${index}" ${todo.completed ? "checked" : ""}>
+        <input type="checkbox" class="complete-checkbox" data-id="${todo.id}" ${todo.completed ? "checked" : ""}>
       </td>
-      <td><button class="delete-btn" data-index="${index}">Delete</button></td>
+      <td><button class="delete-btn" data-id="${todo.id}">Delete</button></td>
     `;
     todoTable.appendChild(row);
   });
 }
 
-function handleTableClick(e) {
-  const index = e.target.getAttribute("data-index");
-  
-  if (e.target.classList.contains("delete-btn")) {
-    todos.splice(index, 1);
-    saveTodos();
-    renderTable(getFilteredTodos());
-  }
-
-  if (e.target.classList.contains("complete-checkbox")) {
-    todos[index].completed = e.target.checked;
-    saveTodos();
-    renderTable(getFilteredTodos());
-  }
-}
-
-function applyFilters() {
-  const filtered = getFilteredTodos();
-  renderTable(filtered);
-}
-
+// ===== Filter Logic =====
 function getFilteredTodos() {
   const text = filterInput.value.toLowerCase();
-  const status = statusFilter.value;
-
-  return todos.filter(todo => {
+  return todos.filter((todo) => {
     const matchesText = todo.task.toLowerCase().includes(text);
     const matchesStatus =
-      status === "all" ||
-      (status === "completed" && todo.completed) ||
-      (status === "pending" && !todo.completed);
-
+      currentFilter === "all" ||
+      (currentFilter === "completed" && todo.completed) ||
+      (currentFilter === "pending" && !todo.completed);
     return matchesText && matchesStatus;
   });
 }
 
+// ===== LocalStorage =====
 function saveTodos() {
   localStorage.setItem("todos", JSON.stringify(todos));
-}
-
-function loadTodos() {
-  renderTable();
 }

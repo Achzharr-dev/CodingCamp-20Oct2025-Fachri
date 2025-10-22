@@ -1,52 +1,133 @@
+/* ==== GENERAL LAYOUT ==== */
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background: #f5f7fa;
   display: flex;
   justify-content: center;
-  padding-top: 50px;
+  padding: 40px;
 }
 
 .container {
   background: white;
-  padding: 20px;
-  width: 400px;
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 30px;
+  width: 700px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   text-align: center;
   color: #333;
+  margin-bottom: 25px;
 }
 
+/* ==== FORM ==== */
 form {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
 }
 
-input, button {
+form input,
+form button {
   padding: 10px;
-  border-radius: 5px;
-  border: 2px solid #09e862;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
 }
 
-button {
-  background-color: #4CAF50;
+form button {
+  background-color: #4caf50;
   color: white;
   cursor: pointer;
+  transition: background 0.2s ease;
 }
 
+form button:hover {
+  background-color: #45a049;
+}
+
+/* ==== FILTER AREA ==== */
+.filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.filter input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* ==== CUSTOM DROPDOWN ==== */
+.custom-filter {
+  position: relative;
+  display: inline-block;
+}
+
+#filter-button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+#filter-button:hover {
+  background-color: #4caf50;
+  color: white;
+  border-color: #4caf50;
+}
+
+#filter-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  width: 150px;
+  list-style: none;
+  padding: 5px 0;
+  margin: 5px 0 0;
+  z-index: 10;
+}
+
+#filter-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#filter-menu li:hover {
+  background: #f1f1f1;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ==== TABLE STYLE ==== */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-th, td {
+th,
+td {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: center;
@@ -54,7 +135,7 @@ th, td {
 }
 
 th {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   text-transform: uppercase;
 }
@@ -69,6 +150,7 @@ tr.completed td {
   background-color: #eafaea;
 }
 
+/* ==== BUTTONS ==== */
 .delete-btn {
   background-color: #e74c3c;
   color: white;
@@ -85,56 +167,5 @@ tr.completed td {
 
 input[type="checkbox"] {
   transform: scale(1.2);
-  cursor: pointer;
-}
-
-.filter {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 15px;
-  gap: 10px;
-}
-
-.filter input,
-.filter select {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  flex: 1;
-  transition: all 0.2s ease;
-}
-
-.filter input:focus,
-.filter select:focus {
-  border-color: #4CAF50;
-  box-shadow: 0 0 5px rgba(76,175,80,0.5);
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  background: #f0f0f0;
-  margin-bottom: 8px;
-  padding: 10px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.delete-btn {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
   cursor: pointer;
 }

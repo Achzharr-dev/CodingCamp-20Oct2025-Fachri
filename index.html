@@ -1,47 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To do list</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>To-Do List App</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <div class="container">
-        <h1>My To Do List</h1>
+  <div class="container">
+    <h1>My To-Do List</h1>
 
-        <form id="todo-form">
-            <input type="text" id="todo-input" placeholder="Add a new task">
-            <input type="date" id="todo-date">
-            <button type="submit">add task</button>
-        </form>
+    <form id="todo-form">
+      <input type="text" id="todo-input" placeholder="Enter your task..." required />
+      <input type="date" id="todo-date" required />
+      <button type="submit">Add Task</button>
+    </form>
 
-        <div class="filter">
-            <input type="text" id="filter-input" placeholder="cari task...">
-            
-            <select id="status-filter">
-                <option value="all">All</option>
-                <option value="completed">Completed</option>
-                <option value="pending">Pending</option>
-            </select>
-        </div>
+    <div class="filter">
+      <input type="text" id="filter-input" placeholder="Search tasks..." />
 
-            <table id="todo-table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Task</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Tasks will be added here dynamically -->
-                </tbody>
-            </table>
-
+      <div class="custom-filter">
+        <button id="filter-button">Filter ▼</button>
+        <ul id="filter-menu" class="hidden">
+          <li data-status="all">All</li>
+          <li data-status="completed">Completed</li>
+          <li data-status="pending">Pending</li>
+        </ul>
+      </div>
     </div>
-    <script src="js/script.js"></script>
+
+    <table id="todo-table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Task</th>
+          <th>Date</th>
+          <th>Completed</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script src="js/script.js" defer></script>
 </body>
 </html>
